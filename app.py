@@ -43,7 +43,7 @@ app.run()
 
 @app.route('/')
 def index():
-    response = "MQTT-Prometheus-Adapter is running on this port. <br> Go to the <a href='/metrics'>metrics</a>"
+    response = "MQTT-Prometheus-Adapter is running on this port.<br>Go to the <a href='/metrics'>metrics</a>"
     return render_template('index.html', content=response)
 
 @app.route('/metrics')

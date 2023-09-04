@@ -1,8 +1,6 @@
 import yaml
 config_file_path = './mqtt-prometheus-adapter/config.yml'
 
-import paho.mqtt.client as mqtt
-
 import sys
 
 from flask import Flask

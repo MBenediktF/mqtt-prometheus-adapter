@@ -1,4 +1,4 @@
-host: tcp://192.168:2.3
+host: 192.168:2.3
 port: 1883
 topics:
   - tl1_q_rygset:

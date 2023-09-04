@@ -8,3 +8,5 @@ def index():
 @app.route('/metrics')
 def metrics():
     return "broker_topic_1 12"
+
+app.run(port=4444)

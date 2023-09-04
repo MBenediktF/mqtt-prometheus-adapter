@@ -7,7 +7,8 @@ class MQTTClient:
         client = mqtt.Client()
         client.on_connect = self.on_connect
         client.on_message = self.on_message
-
+    
+        # Connect to host
         try:
             client.connect(host, port)
         except Exception as e:
@@ -23,8 +24,17 @@ class MQTTClient:
             client.subscribe(topic['path'])
             print(f"Subscribed to topic: {topic['path']}")
 
+            # Add value field
+            topic.update({'value':''})
+
     def on_message(self, client, userdata, msg):
         print(f"Received message on {msg.topic} with payload {msg.payload}")
+
+        # Set new value
+        for topic in self.topics:
+            if topic['path'] == msg.topic:
+                topic['value'] = msg.payload
+
 
     def getData():
         return []

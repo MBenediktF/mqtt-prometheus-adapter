@@ -1,6 +1,8 @@
 import yaml
 config_file_path = './mqtt-prometheus-adapter/config.yml'
 
+from mqtt_client import MQTTClient
+
 import sys
 
 from flask import Flask
@@ -36,3 +38,5 @@ if not endpoint:
 
 print("Endpoint: " + endpoint)
 print("Port: " + port)
+
+mqtt = MQTTClient(endpoint, port)

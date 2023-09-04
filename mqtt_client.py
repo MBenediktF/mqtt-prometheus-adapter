@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import sys
 
 class MQTTClient:
     def __init__(self, host, port, topics):
@@ -7,8 +8,12 @@ class MQTTClient:
         client.on_connect = self.on_connect
         client.on_message = self.on_message
 
-        client.connect(host, port)
-        print("Test")
+        try:
+            client.connect(host, port)
+        except Exception as e:
+            print(f"Error connecting to host: {e}")
+            sys.exit(1)
+
         client.loop_forever()
 
     def on_connect(self, client, userdata, flags, rc):

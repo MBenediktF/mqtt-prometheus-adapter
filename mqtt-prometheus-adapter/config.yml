@@ -1,11 +1,11 @@
 host: test.mosquitto.org
 port: 1883
 topics:
-  - tl1_q_rygset:
-    path: contX/tl1/q/cmnd/rygset
+  - topic_counter:
+    path: test/topic_counter
+    type: counter
+    description: Demo topic
+  - power_state:
+    path: test/power_state
     type: state
-    description: LED State tl1 q
-  - tl2_q_rygset:
-    path: contX/tl2/q/cmnd/rygset
-    type: state
-    description: LED State tl2 q
+    description: Demo topic

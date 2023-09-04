@@ -25,7 +25,6 @@ class MQTTClient:
         for topic in self.topics:
             client.subscribe(topic['path'])
             print(f"Subscribed to topic: {topic['path']}")
-
             # Add value field
             topic.update({'value':''})
 

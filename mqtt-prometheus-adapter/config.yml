@@ -1,7 +1,11 @@
 endpoint: tcp://192.168:2.3
 port: 1883
 topics:
-  - broker_topic_1:
-    name: broker_topic_1
-    alias: broker_topic_1
-    type:
+  - tl1_q_rygset:
+    path: contX/tl1/q/cmnd/rygset
+    type: state
+    description: LED State tl1 q
+  - tl2_q_rygset:
+    path: contX/tl2/q/cmnd/rygset
+    type: state
+    description: LED State tl2 q

@@ -3,6 +3,6 @@ services:
     build:
       context: .
     ports:
-      - 4444:5000
+      - 4444:4444
     environment:
       FLASK_RUN_PORT: 4444

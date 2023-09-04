@@ -1,5 +1,6 @@
+import os
 import yaml
-config_file_path = './mqtt-prometheus-adapter/config.yml'
+config_file_path = os.environ.get('CONFIG_PATH', '/etc/mqtt-prometheus-adapter/config.yml')
 
 from mqtt_client import MQTTClient
 

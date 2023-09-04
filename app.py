@@ -31,12 +31,12 @@ if not endpoint:
     print("Error: Endpoint not specified in config")
     sys.exit(1)
 
-port = config.get('endpportoint', False)
-if not endpoint:
+port = config.get('port', False)
+if not port:
     print("Error: Port not specified in config")
     sys.exit(1)
 
-print("Endpoint: " + endpoint)
-print("Port: " + port)
+print(f'Endpoint: {endpoint}')
+print(f'Port: {port}')
 
 mqtt = MQTTClient(endpoint, port)

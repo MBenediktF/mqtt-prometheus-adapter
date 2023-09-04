@@ -20,8 +20,8 @@ class MQTTClient:
         print("Connected with result code "+str(rc))
 
         for topic in self.topics:
-            print(topic.path)
-            client.subscribe(topic.path)
+            client.subscribe(topic['path'])
+            print(f"Subscribed to topic: {topic['path']}")
 
     def on_message(client, userdata, msg):
         print(msg.topic+" "+str(msg.payload))

@@ -13,7 +13,7 @@ try:
     with open(config_file_path, 'r') as config_file:
         config = yaml.safe_load(config_file)
 except FileNotFoundError:
-    print("Error: Could not open config file.")
+    print(f"Error: Could not open config file: {config_file_path}")
     sys.exit(1)
 except yaml.YAMLError as e:
     print(f'Error: Could not read config file: {e}')

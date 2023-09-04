@@ -48,4 +48,10 @@ def index():
 @app.route('/metrics')
 def metrics():
     data = mqtt.getData()
-    return str(data)
+    response = ""
+    for element in data:
+        name = next(iter(element))
+        response += f"# HELP {name} {element['path']}<br>"
+        response += f"# TYPE {name} {element['type']}<br>"
+        response += f"{name} {element['value']}<br>"
+    return response

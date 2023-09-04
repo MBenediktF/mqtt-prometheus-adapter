@@ -1,5 +1,6 @@
-server:
-  build:
-    context: .
-  ports:
-    - 4444:4444
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - 4444:5000

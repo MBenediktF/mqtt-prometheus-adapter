@@ -1,0 +1,6 @@
+endpoint: tcp://192.168:2.3:1883
+topics:
+  - broker_topic_1:
+    name: broker_topic_1
+    alias: broker_topic_1
+    type:

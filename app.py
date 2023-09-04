@@ -29,4 +29,10 @@ if not endpoint:
     print("Error: Endpoint not specified in config")
     sys.exit(1)
 
+port = config.get('endpportoint', False)
+if not endpoint:
+    print("Error: Port not specified in config")
+    sys.exit(1)
+
 print("Endpoint: " + endpoint)
+print("Port: " + port)

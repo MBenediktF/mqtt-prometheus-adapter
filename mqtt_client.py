@@ -23,8 +23,8 @@ class MQTTClient:
             client.subscribe(topic['path'])
             print(f"Subscribed to topic: {topic['path']}")
 
-    def on_message(client, userdata, msg):
-        print(msg.topic+" "+str(msg.payload))
+    def on_message(self, client, userdata, msg):
+        print(f"Received message on {msg.topic} with payload {msg.payload}")
 
     def getData():
         return []

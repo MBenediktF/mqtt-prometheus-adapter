@@ -7,5 +7,5 @@ topics:
     description: Demo topic
   - power_state:
     path: test/power_state
-    type: state
+    type: gauges
     description: Demo topic

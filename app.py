@@ -6,7 +6,7 @@ from mqtt_client import MQTTClient
 
 import sys
 
-from flask import Flask, render_template
+from flask import Flask
 
 try:
     with open(config_file_path, 'r') as config_file:
@@ -44,7 +44,7 @@ app.run()
 @app.route('/')
 def index():
     response = "MQTT-Prometheus-Adapter is running on this port.<br>Go to the <a href='/metrics'>metrics</a>"
-    return render_template('index.html', content=response)
+    return response
 
 @app.route('/metrics')
 def metrics():
@@ -52,7 +52,8 @@ def metrics():
     response = ""
     for element in data:
         name = next(iter(element))
-        response += f"# HELP {name} {element['path']}<br>"
-        response += f"# TYPE {name} {element['type']}<br>"
-        response += f"{name} {element['value']}<br>"
-    return render_template('index.html', content=response)
+        #response += f"# HELP {name} {element['path']} "
+        #response += f"# TYPE {name} {element['type']} "
+        #response += f"{name} \"{element['value']}\" "
+        response += f"{name} {element['value']} "
+    return response

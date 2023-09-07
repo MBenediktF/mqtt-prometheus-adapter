@@ -1,11 +1,17 @@
 host: test.mosquitto.org
 port: 1883
 topics:
-  - topic_counter:
-    path: test/topic_counter
-    type: counter
-    description: Demo topic
+  - led_state:
+    path: test/led_state
+    type: gauge
+    description: Traffic light LEDs
+    conversion:
+      re_pattern: \d+
+      exports:
+        - red
+        - green
+        - blue 
   - power_state:
     path: test/power_state
-    type: gauges
+    type: gauge
     description: Demo topic

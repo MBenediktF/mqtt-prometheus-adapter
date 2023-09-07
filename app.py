@@ -6,6 +6,8 @@ from mqtt_client import MQTTClient
 
 import sys
 
+import re
+
 from flask import Flask
 
 try:
@@ -37,7 +39,6 @@ print(f'Port: {port}')
 
 mqtt = MQTTClient(host, port, topics)
 
-
 app = Flask(__name__)
 app.run()
 
@@ -52,8 +53,20 @@ def metrics():
     response = ""
     for element in data:
         name = next(iter(element))
-        #response += f"# HELP {name} {element['path']} "
-        #response += f"# TYPE {name} {element['type']} "
-        #response += f"{name} \"{element['value']}\" "
-        response += f"{name} {element['value']} "
+        if 'conversion' in element and 're_pattern' in element['conversion']:
+            try:
+                pattern = element['conversion']['re_pattern']
+                exports = element['conversion']['exports']
+                results = re.findall(pattern, str(element['value']))
+                print(f"Results: {results}; Pattern: {pattern}; Value: {element['value']}")
+                for index, result in enumerate(results):
+                    response += f"{name}_{exports[index]} {result}\n"
+            except Exception as e:
+                print(f"Error: Could not convert value: {e}")
+        elif element['value'] != '':
+            response += f"{name} {element['value']}\n"
     return response
+
+#response += f"# HELP {name} {element['path']} "
+#response += f"# TYPE {name} {element['type']} "
+#response += f"{name} \"{element['value']}\" "

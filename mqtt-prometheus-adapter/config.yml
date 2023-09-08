@@ -3,7 +3,6 @@ port: 1883
 topics:
   - led_state:
     path: test/led_state
-    type: gauge
     description: Traffic light LEDs
     conversion:
       re_pattern: \d+
@@ -14,5 +13,4 @@ topics:
         - blue 
   - power_state:
     path: test/power_state
-    type: gauge
     description: Demo topic

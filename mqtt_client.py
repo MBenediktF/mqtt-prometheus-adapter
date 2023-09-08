@@ -22,14 +22,11 @@ class MQTTClient:
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
-
         for topic in self.topics:
             client.subscribe(topic['path'])
             print(f"Subscribed to topic: {topic['path']}")
 
     def on_message(self, client, userdata, msg):
-        print(f"Received message on {msg.topic} with payload {msg.payload}")
-
         # Set new value
         for topic in self.topics:
             if topic['path'] == msg.topic:
@@ -42,7 +39,6 @@ class MQTTClient:
                 pattern = topic['conversion']['re_pattern']
                 exports = topic['conversion']['exports']
                 results = re.findall(pattern, str(payload))
-                print(f"Results: {results}; Pattern: {pattern}; Value: {payload}")
                 for index, result in enumerate(results):
                     topic['prometheus_object'](child=str(exports[index])).set(result)
             except Exception as e:

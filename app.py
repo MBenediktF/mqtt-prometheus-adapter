@@ -30,14 +30,8 @@ if not port:
 
 topics = config.get('topics', [])
 
-print(str(topics))
-
-print(f'Host: {host}')
-print(f'Port: {port}')
-
 for topic in topics:
     name = str(next(iter(topic)))
-    print(name)
     if 'conversion' in topic and 're_pattern' in topic['conversion']:
         try:
             exports = topic['conversion']['exports']
@@ -52,8 +46,3 @@ for topic in topics:
 start_http_server(4444)
 
 mqtt = MQTTClient(host, port, topics)
-
-
-#response += f"# HELP {name} {element['path']} "
-#response += f"# TYPE {name} {element['type']} "
-#response += f"{name} \"{element['value']}\" "

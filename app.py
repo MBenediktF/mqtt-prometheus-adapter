@@ -42,7 +42,7 @@ for topic in topics:
             print(f"Error: Could not convert value: {e}")
     else:
         topic.update({'prometheus_object': Gauge(next(iter(topic)), str(topic['description']))})
-    
+
 start_http_server(4444)
 
 mqtt = MQTTClient(host, port, topics)

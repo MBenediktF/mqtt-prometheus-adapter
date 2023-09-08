@@ -35,7 +35,6 @@ for topic in topics:
     if 'conversion' in topic and 're_pattern' in topic['conversion']:
         try:
             exports = topic['conversion']['exports']
-            child_name = topic['conversion']['child_name']
             topic.update({'prometheus_object': Gauge(next(iter(topic)), str(topic['description']), ['child'])})
         except Exception as e:
             print(f"Error: Could not convert value: {e}")

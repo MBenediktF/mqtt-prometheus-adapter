@@ -38,6 +38,7 @@ class MQTTClient:
             try:
                 pattern = topic['conversion']['re_pattern']
                 exports = topic['conversion']['exports']
+                child_name = topic['conversion']['child_name']
                 results = re.findall(pattern, str(payload))
                 for index, result in enumerate(results):
                     prometheus_object = topic['prometheus_object']

@@ -7,6 +7,7 @@ topics:
     description: Traffic light LEDs
     conversion:
       re_pattern: \d+
+      child_name: color
       exports:
         - red
         - green

@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 import sys
 import threading
+import re
 
 class MQTTClient:
     def __init__(self, host, port, topics):
@@ -25,8 +26,6 @@ class MQTTClient:
         for topic in self.topics:
             client.subscribe(topic['path'])
             print(f"Subscribed to topic: {topic['path']}")
-            # Add value field
-            topic.update({'value':''})
 
     def on_message(self, client, userdata, msg):
         print(f"Received message on {msg.topic} with payload {msg.payload}")
@@ -34,8 +33,24 @@ class MQTTClient:
         # Set new value
         for topic in self.topics:
             if topic['path'] == msg.topic:
-                topic['value'] = msg.payload
+                self.set_prometheus_payload(topic, msg.payload)
                 break
+
+    def set_prometheus_payload(self, topic, payload):
+        if 'conversion' in topic and 're_pattern' in topic['conversion']:
+            try:
+                pattern = topic['conversion']['re_pattern']
+                exports = topic['conversion']['exports']
+                results = re.findall(pattern, str(payload))
+                print(f"Results: {results}; Pattern: {pattern}; Value: {payload}")
+                for index, result in enumerate(results):
+                    topic['prometheus_object'](child=str(exports[index])).set(result)
+            except Exception as e:
+                print(f"Error: Could not convert value: {e}")
+        elif topic['value'] != '':
+            topic['prometheus_object'].set(payload)
+
+        
 
     def getData(self):
         return self.topics

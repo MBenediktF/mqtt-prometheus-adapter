@@ -36,8 +36,7 @@ for topic in topics:
         try:
             exports = topic['conversion']['exports']
             child_name = topic['conversion']['child_name']
-            for index, export in enumerate(exports):
-                topic.update({'prometheus_object': Gauge(next(iter(topic)), str(topic['description']), [str(child_name)])})
+            topic.update({'prometheus_object': Gauge(next(iter(topic)), str(topic['description']), ['child'])})
         except Exception as e:
             print(f"Error: Could not convert value: {e}")
     else:

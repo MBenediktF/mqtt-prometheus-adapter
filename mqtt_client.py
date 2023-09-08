@@ -40,10 +40,11 @@ class MQTTClient:
                 exports = topic['conversion']['exports']
                 results = re.findall(pattern, str(payload))
                 for index, result in enumerate(results):
-                    topic['prometheus_object'](child=str(exports[index])).set(result)
+                    prometheus_object = topic['prometheus_object']
+                    prometheus_object.labels(child=str(exports[index])).set(result)
             except Exception as e:
                 print(f"Error: Could not convert value: {e}")
-        elif topic['value'] != '':
+        else:
             topic['prometheus_object'].set(payload)
 
         

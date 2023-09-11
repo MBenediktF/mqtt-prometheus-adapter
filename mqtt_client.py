@@ -29,7 +29,7 @@ class MQTTClient:
 
     def on_message(self, client, userdata, msg):
         if self.log_topic_updates:
-            print(f"Received topic update: {msg.topic} : {msg.value}")
+            print(f"Received topic update: {msg.topic} : {msg.payload}")
         # Set new value
         for topic in self.topics:
             if topic['path'] == msg.topic:

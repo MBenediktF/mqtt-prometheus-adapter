@@ -6,9 +6,7 @@ from mqtt_client import MQTTClient
 
 import sys
 
-import re
-
-from flask import Flask
+from prometheus_client import start_http_server, Gauge
 
 try:
     with open(config_file_path, 'r') as config_file:
@@ -32,41 +30,17 @@ if not port:
 
 topics = config.get('topics', [])
 
-print(str(topics))
+for topic in topics:
+    name = str(next(iter(topic)))
+    if 'conversion' in topic and 're_pattern' in topic['conversion']:
+        try:
+            exports = topic['conversion']['exports']
+            topic.update({'prometheus_object': Gauge(next(iter(topic)), str(topic['description']), ['child'])})
+        except Exception as e:
+            print(f"Error: Could not convert value: {e}")
+    else:
+        topic.update({'prometheus_object': Gauge(next(iter(topic)), str(topic['description']))})
 
-print(f'Host: {host}')
-print(f'Port: {port}')
+start_http_server(4444)
 
 mqtt = MQTTClient(host, port, topics)
-
-app = Flask(__name__)
-app.run()
-
-@app.route('/')
-def index():
-    response = "MQTT-Prometheus-Adapter is running on this port.<br>Go to the <a href='/metrics'>metrics</a>"
-    return response
-
-@app.route('/metrics')
-def metrics():
-    data = mqtt.getData()
-    response = ""
-    for element in data:
-        name = next(iter(element))
-        if 'conversion' in element and 're_pattern' in element['conversion']:
-            try:
-                pattern = element['conversion']['re_pattern']
-                exports = element['conversion']['exports']
-                results = re.findall(pattern, str(element['value']))
-                print(f"Results: {results}; Pattern: {pattern}; Value: {element['value']}")
-                for index, result in enumerate(results):
-                    response += f"{name}_{exports[index]} {result}\n"
-            except Exception as e:
-                print(f"Error: Could not convert value: {e}")
-        elif element['value'] != '':
-            response += f"{name} {element['value']}\n"
-    return response
-
-#response += f"# HELP {name} {element['path']} "
-#response += f"# TYPE {name} {element['type']} "
-#response += f"{name} \"{element['value']}\" "

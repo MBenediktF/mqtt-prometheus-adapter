@@ -46,12 +46,12 @@ class MQTTClient:
                     prometheus_object = topic['prometheus_object']
                     prometheus_object.labels(child=str(exports[index])).set(result)
             except Exception as e:
-                print(f"Error: Could not convert incomming payload {payload} on topic {topic}: {e}")
+                print(f"Error: Could not convert incomming payload {payload} on topic {topic['path']}: {e}")
         else:
             try:
                 topic['prometheus_object'].set(payload)
             except Exception as e:
-                print(f"Error: Could not write incomming payload {payload} on topic {topic}: {e}")
+                print(f"Error: Could not write incomming payload {payload} on topic {topic['path']}: {e}")
 
         
 

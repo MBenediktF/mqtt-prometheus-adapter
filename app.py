@@ -28,6 +28,8 @@ if not port:
     print("Error: Port not specified in config")
     sys.exit(1)
 
+log_topic_updates = config.get('log_topic_updates', False)
+
 topics = config.get('topics', [])
 
 for topic in topics:
@@ -43,4 +45,4 @@ for topic in topics:
 
 start_http_server(4444)
 
-mqtt = MQTTClient(host, port, topics)
+mqtt = MQTTClient(host, port, topics, log_topic_updates)

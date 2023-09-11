@@ -13,3 +13,4 @@ topics:
   - power_state:
     path: test/power_state
     description: Demo topic
+log_topic_updates: True

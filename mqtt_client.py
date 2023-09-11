@@ -4,8 +4,9 @@ import threading
 import re
 
 class MQTTClient:
-    def __init__(self, host, port, topics):
+    def __init__(self, host, port, topics, log_topic_updates):
         self.topics = topics
+        self.log_topic_updates = log_topic_updates
         client = mqtt.Client()
         client.on_connect = self.on_connect
         client.on_message = self.on_message
@@ -27,6 +28,8 @@ class MQTTClient:
             print(f"Subscribed to topic: {topic['path']}")
 
     def on_message(self, client, userdata, msg):
+        if self.log_topic_updates:
+            print(f"Received topic update: {msg.topic} : {msg.payload}")
         # Set new value
         for topic in self.topics:
             if topic['path'] == msg.topic:
@@ -43,9 +46,12 @@ class MQTTClient:
                     prometheus_object = topic['prometheus_object']
                     prometheus_object.labels(child=str(exports[index])).set(result)
             except Exception as e:
-                print(f"Error: Could not convert value: {e}")
+                print(f"Error: Could not convert incomming payload {payload} on topic {topic['path']}: {e}")
         else:
-            topic['prometheus_object'].set(payload)
+            try:
+                topic['prometheus_object'].set(payload)
+            except Exception as e:
+                print(f"Error: Could not write incomming payload {payload} on topic {topic['path']}: {e}")
 
         
 

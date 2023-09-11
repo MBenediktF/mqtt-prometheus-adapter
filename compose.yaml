@@ -5,7 +5,6 @@ services:
     ports:
       - 4444:4444
     environment:
-      FLASK_RUN_PORT: 4444
       CONFIG_PATH: /etc/mqtt-prometheus-adapter/config.yml
     volumes:
       - ./mqtt-prometheus-adapter/:/etc/mqtt-prometheus-adapter/

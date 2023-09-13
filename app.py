@@ -43,7 +43,6 @@ for topic in topics:
             print(f"Error: Could not convert value: {e}")
     elif type == "counter":
         topic.update({'prometheus_object': Counter(name, str(topic['description']))})
-        topic.update({'counter': 0})
     elif type == "gauge":
         topic.update({'prometheus_object': Gauge(name, str(topic['description']))})
     else: 

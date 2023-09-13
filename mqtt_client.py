@@ -37,7 +37,8 @@ class MQTTClient:
                 break
 
     def set_prometheus_payload(self, topic, payload):
-        if 'conversion' in topic and 're_pattern' in topic['conversion']:
+        type = topic.get('type', "gauge")
+        if 'conversion' in topic and 're_pattern' in topic['conversion'] and type == "gauge":
             try:
                 pattern = topic['conversion']['re_pattern']
                 exports = topic['conversion']['exports']
@@ -47,11 +48,15 @@ class MQTTClient:
                     prometheus_object.labels(child=str(exports[index])).set(result)
             except Exception as e:
                 print(f"Error: Could not convert incomming payload {payload} on topic {topic['path']}: {e}")
-        else:
+        elif type == "counter":
+            print()
+        elif type == "gauge":
             try:
                 topic['prometheus_object'].set(payload)
             except Exception as e:
                 print(f"Error: Could not write incomming payload {payload} on topic {topic['path']}: {e}")
+        else:
+            print(f"Warning: Skipping received message on topic {topic['path']} for reason: Unknown type")
 
         
 

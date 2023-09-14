@@ -5,7 +5,7 @@ topics:
     path: test/led_state
     description: Traffic light LEDs
     conversion:
-      re_pattern: \d+
+      re_pattern: '\d+'
       exports:
         - red
         - green
@@ -13,4 +13,9 @@ topics:
   - power_state:
     path: test/power_state
     description: Demo topic
+  - reboots:
+    path: test/reboot
+    description: Device reboots
+    type: counter
+    filter: '1'
 log_topic_updates: True

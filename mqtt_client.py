@@ -49,7 +49,13 @@ class MQTTClient:
             except Exception as e:
                 print(f"Error: Could not convert incomming payload {payload} on topic {topic['path']}: {e}")
         elif type == "counter":
-            topic['prometheus_object'].inc()
+            try:
+                filter = topic.get('filter', False)
+                if filter and re.search(filter, str(payload)) == None:
+                    return
+                topic['prometheus_object'].inc()
+            except Exception as e:
+                print(f"Error: Could not filter incomming payload {payload} on topic {topic['path']}: {e}")
         elif type == "gauge":
             try:
                 topic['prometheus_object'].set(payload)

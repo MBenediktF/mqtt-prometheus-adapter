@@ -17,4 +17,5 @@ topics:
     path: test/reboot
     description: Device reboots
     type: counter
+    filter: '1'
 log_topic_updates: True

@@ -5,7 +5,7 @@ topics:
     path: test/led_state
     description: Traffic light LEDs
     conversion:
-      re_pattern: \d+
+      re_pattern: '\d+'
       exports:
         - red
         - green

@@ -57,8 +57,3 @@ class MQTTClient:
                 print(f"Error: Could not write incomming payload {payload} on topic {topic['path']}: {e}")
         else:
             print(f"Warning: Skipping received message on topic {topic['path']} for reason: Unknown type")
-
-        
-
-    def getData(self):
-        return self.topics

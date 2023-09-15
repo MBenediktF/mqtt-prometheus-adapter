@@ -12,6 +12,8 @@ In order to use the adapter, please update the config.yml:
     - conversion: optional if you need to extract values from a string
         - re_pattern: Regular Expressions filter pattern
         - exports: names of the datapoints as array
+    - type: gauge (default), counter
+    - filter: regular expressions filter pattern (only for counter)
 
 ## Resources
 

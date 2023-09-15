@@ -6,7 +6,7 @@ from mqtt_client import MQTTClient
 
 import sys
 
-from prometheus_client import start_http_server, Gauge
+from prometheus_client import start_http_server, Gauge, Counter
 
 try:
     with open(config_file_path, 'r') as config_file:
@@ -34,14 +34,19 @@ topics = config.get('topics', [])
 
 for topic in topics:
     name = str(next(iter(topic)))
-    if 'conversion' in topic and 're_pattern' in topic['conversion']:
+    type = topic.get('type', "gauge")
+    if 'conversion' in topic and 're_pattern' in topic['conversion'] and type == "gauge":
         try:
             exports = topic['conversion']['exports']
-            topic.update({'prometheus_object': Gauge(next(iter(topic)), str(topic['description']), ['child'])})
+            topic.update({'prometheus_object': Gauge(name, str(topic['description']), ['child'])})
         except Exception as e:
             print(f"Error: Could not convert value: {e}")
-    else:
-        topic.update({'prometheus_object': Gauge(next(iter(topic)), str(topic['description']))})
+    elif type == "counter":
+        topic.update({'prometheus_object': Counter(name, str(topic['description']))})
+    elif type == "gauge":
+        topic.update({'prometheus_object': Gauge(name, str(topic['description']))})
+    else: 
+        print(f"Error: Unknown type for topic {name}: {type}")
 
 start_http_server(4444)
 

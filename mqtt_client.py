@@ -42,10 +42,22 @@ class MQTTClient:
             try:
                 pattern = topic['conversion']['re_pattern']
                 exports = topic['conversion']['exports']
+                prometheus_object = topic['prometheus_object']
                 results = re.findall(pattern, str(payload))
                 for index, result in enumerate(results):
-                    prometheus_object = topic['prometheus_object']
-                    prometheus_object.labels(child=str(exports[index])).set(result)
+                    if len(exports)-1 < index: break
+                    export = exports[index]
+                    export_name = export
+                    mapping = False
+                    if isinstance(export, dict):
+                        mapping = export.get('mapping', False)
+                    if mapping:
+                        export_name = str(next(iter(export)))
+                        result = mapping.get(result, False)
+                        if result == False:
+                            print(f"Warning: Could not map converted payload: {results[index]}")
+                            continue
+                    prometheus_object.labels(child=str(export_name)).set(result)   
             except Exception as e:
                 print(f"Error: Could not convert incomming payload {payload} on topic {topic['path']}: {e}")
         elif type == "counter":

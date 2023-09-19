@@ -14,7 +14,7 @@ topics:
     path: test/display_state
     description: Display
     conversion:
-      re_pattern: '\d+'
+      re_pattern: "(?<=[',])[a-zA-Z0-9_ ]"
       exports:
         - text_state:
           mapping:

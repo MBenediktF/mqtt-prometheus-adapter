@@ -18,8 +18,8 @@ topics:
       exports:
         - text_state:
           mapping:
-            - offen: 1
-            - geschlossen: 0
+            offen: 1
+            geschlossen: 0
   - power_state:
     path: test/power_state
     description: Demo topic

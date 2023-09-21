@@ -10,6 +10,16 @@ topics:
         - red
         - green
         - blue 
+  - display_state:
+    path: test/display_state
+    description: Display
+    conversion:
+      re_pattern: "(?<=[',])[a-zA-Z0-9_ ]"
+      exports:
+        - text_state:
+          mapping:
+            offen: 1
+            geschlossen: 0
   - power_state:
     path: test/power_state
     description: Demo topic

@@ -29,3 +29,5 @@ You can find more informations about compiling for different plattforms [here](h
 ## Resources
 
 - [Build your Python image](https://docs.docker.com/language/python/build-images/)
+- [Prometheus-Client Python](https://github.com/prometheus/client_python)
+- [Paho MQTT Client](https://pypi.org/project/paho-mqtt/)

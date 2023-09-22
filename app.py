@@ -32,6 +32,14 @@ log_topic_updates = config.get('log_topic_updates', False)
 
 topics = config.get('topics', [])
 
+polling = config.get('polling', False)
+polling_interval = polling.get('interval_ms', 15000)
+polling_topics = polling.get('topics', False)
+
+if polling and isinstance(polling_topics, dict) == False:
+    print("Could not read polling topics: Please check the configuration.")
+    polling_topics = False
+
 for topic in topics:
     name = str(next(iter(topic)))
     type = topic.get('type', "gauge")
@@ -50,4 +58,4 @@ for topic in topics:
 
 start_http_server(4444)
 
-mqtt = MQTTClient(host, port, topics, log_topic_updates)
+mqtt = MQTTClient(host, port, topics, polling_interval, polling_topics, log_topic_updates)

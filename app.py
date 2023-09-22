@@ -32,11 +32,11 @@ log_topic_updates = config.get('log_topic_updates', False)
 
 topics = config.get('topics', [])
 
-polling = config.get('polling', False)
+polling = config.get('polling', {})
 polling_interval = polling.get('interval_ms', 15000)
 polling_topics = polling.get('topics', False)
 
-if polling and isinstance(polling_topics, dict) == False:
+if isinstance(polling_topics, list) == False:
     print("Could not read polling topics: Please check the configuration.")
     polling_topics = False
 

@@ -28,4 +28,9 @@ topics:
     description: Device reboots
     type: counter
     filter: '1'
+polling:
+  interval: 15
+  topics:
+    - topic1: "payload1"
+    - topic2: "payload2"
 log_topic_updates: True

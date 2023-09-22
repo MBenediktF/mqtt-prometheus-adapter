@@ -15,6 +15,9 @@ In order to use the adapter, please update the config.yml:
             - mapping: string to number mapping pairs‚
     - type: gauge (default), counter
     - filter: regular expressions filter pattern (only for counter)
+- Polling: Send payload to topics every n seconds
+    - interval: Send interval in seconds
+    - topics: Array of key-value pairs (- topic: payload)
 
 ## How to compile
 

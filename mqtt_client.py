@@ -2,9 +2,10 @@ import paho.mqtt.client as mqtt
 import sys
 import threading
 import re
+import time
 
 class MQTTClient:
-    def __init__(self, host, port, topics, log_topic_updates):
+    def __init__(self, host, port, topics, polling_interval, polling_topics, log_topic_updates):
         self.topics = topics
         self.log_topic_updates = log_topic_updates
         client = mqtt.Client()
@@ -20,6 +21,12 @@ class MQTTClient:
 
         mqtt_loop_thread = threading.Thread(target=client.loop_forever)
         mqtt_loop_thread.start()
+
+        if polling_topics != False:
+            print("Starting polling")
+            polling_thread = threading.Thread(target=self.periodic_publish, args=(client, polling_interval, polling_topics))
+            polling_thread.start()
+        
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
@@ -75,3 +82,13 @@ class MQTTClient:
                 print(f"Error: Could not write incomming payload {payload} on topic {topic['path']}: {e}")
         else:
             print(f"Warning: Skipping received message on topic {topic['path']} for reason: Unknown type")
+
+    def periodic_publish(self, client, interval, topics):
+        while(True):    
+            for topic in topics:
+                try:
+                    key, value = next(iter(topic.items()))
+                    client.publish(key, value)
+                except Exception as e:
+                    print(f"Could not publish to topic: {e}")
+            time.sleep(interval)

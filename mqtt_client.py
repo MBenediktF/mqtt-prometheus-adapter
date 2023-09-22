@@ -83,13 +83,12 @@ class MQTTClient:
         else:
             print(f"Warning: Skipping received message on topic {topic['path']} for reason: Unknown type")
 
-    def periodic_publish(client, interval, topics):
-        while(True):
-            try:
-                for key, value in topics.items():
-                    print(f"Topic to publish: {key}, Value: {value}")
+    def periodic_publish(self, client, interval, topics):
+        while(True):    
+            for topic in topics:
+                try:
+                    key, value = next(iter(topic.items()))
                     client.publish(key, value)
-            except Exception as e:
-                print(f"Error initiating polling: {e}")
-                sys.exit(1)
+                except Exception as e:
+                    print(f"Could not publish to topic: {e}")
             time.sleep(interval)

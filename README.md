@@ -5,19 +5,20 @@ Adapter to subscribe to mqtt topics and log them into prometheus.
 ## Configuration
 
 In order to use the adapter, please update the config.yml:
-- Host: Server ip / url
-- Port: MQTT Port e.g. 1883
-- Topics: Export name of datapoints
-    - path: Topic name e.g. sensors/temperature
-    - conversion: optional if you need to extract values from a string
-        - re_pattern: Regular Expressions filter pattern
-        - exports: names of the datapoints as array
-            - mapping: string to number mapping pairs‚
-    - type: gauge (default), counter
-    - filter: regular expressions filter pattern (only for counter)
-- Polling: Send payload to topics every n seconds
-    - interval: Send interval in seconds
-    - topics: Array of key-value pairs (- topic: payload)
+- `host`: Server ip / url
+- `port`: MQTT Port e.g. 1883
+- `topics`: Export name of datapoints
+    - `path`: Topic name e.g. sensors/temperature
+    - `conversion`: optional if you need to extract values from a string
+        - `re_pattern`: Regular Expressions filter pattern
+        - `exports`: names of the datapoints as array
+            - `mapping`: string to number mapping pairs‚
+    - `type`: gauge (default), counter
+    - `filter`: regular expressions filter pattern (only for counter)
+- `polling`: Send payload to topics every n seconds
+    - `interval`: Send interval in seconds
+    - `topics`: Array of key-value pairs (- topic: payload)
+- `log_topic_updates`: If true, print all data received on subscribed topics
 
 ## How to compile
 

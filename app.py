@@ -33,7 +33,7 @@ log_topic_updates = config.get('log_topic_updates', False)
 topics = config.get('topics', [])
 
 polling = config.get('polling', {})
-polling_interval = polling.get('interval_ms', 15000)
+polling_interval = polling.get('interval', 15)
 polling_topics = polling.get('topics', False)
 
 if isinstance(polling_topics, list) == False:

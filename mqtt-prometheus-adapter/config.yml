@@ -29,7 +29,7 @@ topics:
     type: counter
     filter: '1'
 polling:
-  interval_ms: 15000
+  interval: 15
   topics:
     - topic1: "payload1"
     - topic2: "payload2"
